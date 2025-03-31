@@ -6,7 +6,7 @@ data class BlogDto(
     val title: String,
     val content: String
 ) {
-    fun toEntity(title: String, content: String) : Blog {
+    fun toEntity() : Blog {
         return Blog(title, content)
     }
 }

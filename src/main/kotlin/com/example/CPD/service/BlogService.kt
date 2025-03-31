@@ -30,5 +30,9 @@ class BlogService(
         return blogRepository.findById(id).orElseThrow()
     }
 
+    fun getAll(): List<Blog> {
+        return blogRepository.findAll()
+    }
+
 
 }

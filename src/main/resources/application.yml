@@ -1,10 +1,17 @@
-spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/test
-    username: sa
-    password:
+#spring:
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:~/test
+#    username: sa
+#    password:
+
+payment:
+  toss:
+    test_client_api_key: test_ck_oEjb0gm23PwpQ0Xgjkvn8pGwBJn5
+    test_secrete_api_key: test_sk_BX7zk2yd8yP4RQAnJbRprx9POLqK
+    success_url:
+    fail_url:
