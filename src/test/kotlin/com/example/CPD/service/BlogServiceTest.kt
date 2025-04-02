@@ -41,9 +41,15 @@ class BlogServiceTest {
     @Test
     @DisplayName("특정 id로 블로그 글을 조회한다.")
     fun testGetById() {
+
+        val testBlog = Blog.create("테스트 제목", "테스트 내용").apply {
+            val field = this::class.java.getDeclaredField("id")
+            field.isAccessible = true
+            field.set(this, 1L)
+        }
+
         whenever(blogRepository.findById(1L)).thenReturn(Optional.of(testBlog))
         val findById = blogService.getById(1L)
-        //findById.id = 1L // 테스트할 때는 blog set설정을 지우고 테스트하기
         
         assertNotNull(findById)
         println(findById.id)
