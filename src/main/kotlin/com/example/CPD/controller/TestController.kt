@@ -1,6 +1,6 @@
 package com.example.CPD.controller
 
-import com.example.CPD.data.BlogDto
+import com.example.CPD.dto.BlogDto
 import com.example.CPD.data.MessageResponse
 import com.example.CPD.entity.Blog
 import com.example.CPD.service.BlogService

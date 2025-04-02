@@ -27,7 +27,7 @@ class TestControllerTest {
 
     private val objectMapper = ObjectMapper()
 
-    val testBlog = Blog(title = "Test Title", content = "Test Content")
+    val testBlog = Blog.create(title = "Test Title", content = "Test Content")
 
     @Test
     @DisplayName("특정 ID로 블로그 글을 조회한다")
@@ -43,7 +43,7 @@ class TestControllerTest {
     @Test
     @DisplayName("모든 블로그 글을 조회한다.")
     fun testGetById() {
-        `when`(blogService.getAll()).thenReturn(listOf(testBlog, Blog("Test", "content")))
+        `when`(blogService.getAll()).thenReturn(listOf(testBlog, Blog.create("Test", "content")))
 
         mockMvc.perform(get("/api/"))
             .andExpect(status().isOk)
@@ -71,7 +71,7 @@ class TestControllerTest {
     @Test
     @DisplayName("블로그 글을 업데이트한다.")
     fun testUpdateBlog() {
-        val updateBlog = Blog("Update Title", "Update Content")
+        val updateBlog = Blog.create("Update Title", "Update Content")
         `when`(blogService.update(eq(1L), any())).thenReturn(updateBlog)
 
         mockMvc.perform(put("/api/update/1")

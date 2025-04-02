@@ -18,7 +18,7 @@ class BlogService(
 
     @Transactional
     fun update(id: Long, blog: Blog) : Blog {
-        return getById(id).apply { update(blog) }
+        return getById(id).apply { update(blog.title, blog.content) }
     }
 
     @Transactional

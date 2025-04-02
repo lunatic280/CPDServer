@@ -23,8 +23,8 @@ class BlogServiceTest {
 
     private val blogRepository: BlogRepository = mock(BlogRepository::class.java)
     private val blogService = BlogService(blogRepository)
-    val testBlog = Blog(title = "Test Title", content = "Test Content")
-    val testBlog2 = Blog(title = "Test Title1", content = "Test Content1")
+    val testBlog = Blog.create(title = "Test Title", content = "Test Content")
+    val testBlog2 = Blog.create(title = "Test Title1", content = "Test Content1")
     @Test
     @DisplayName("블로그 모든 글을 조회한다.")
     fun testGetAllBlog() {
@@ -43,7 +43,7 @@ class BlogServiceTest {
     fun testGetById() {
         whenever(blogRepository.findById(1L)).thenReturn(Optional.of(testBlog))
         val findById = blogService.getById(1L)
-        findById.id = 1L // 테스트할 때는 blog set설정을 지우고 테스트하기
+        //findById.id = 1L // 테스트할 때는 blog set설정을 지우고 테스트하기
         
         assertNotNull(findById)
         println(findById.id)
@@ -76,10 +76,10 @@ class BlogServiceTest {
     @Test
     @DisplayName("블로그 글을 찾아서 업데이트한다.")
     fun testUpdateBlog() {
-        val updateBlog = Blog(title = "Update Blog", content = "Update Content")
+        val updateBlog = Blog.create(title = "Update Blog", content = "Update Content")
         whenever(blogRepository.findById(1L)).thenReturn(Optional.of(testBlog))
         whenever(blogRepository.save(any())).thenReturn(updateBlog)
-        updateBlog.id = 1L
+        //updateBlog.id = 1L
 
         val result = blogService.update(1L, updateBlog)
 

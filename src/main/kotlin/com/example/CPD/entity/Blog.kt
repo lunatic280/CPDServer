@@ -1,30 +1,37 @@
 package com.example.CPD.entity
 
 import jakarta.persistence.*
+import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Protected
 
 @Entity
 class Blog(
-    title: String,
-    content: String
-) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    val id: Long? = null
+) {
+
+    @Column(nullable = false)
+    var title: String = "제목 없음"
         protected set
 
     @Column(nullable = false)
-    var title: String = title
+    var content: String = "내용 없음"
         protected set
 
-    @Column(nullable = false)
-    var content: String = content
-        protected set
+    protected constructor() : this(null)
+    fun update(title: String, content: String) {
+        this.title = title
+        this.content = content
+    }
 
-    constructor() : this("", "")
+    companion object {
+        fun create(title: String, content: String): Blog {
+            return Blog().apply {
+                this.title = title
+                this.content = content
+            }
+        }
 
-    fun update(blog: Blog) {
-        this.title = blog.title
-        this.content = blog.content
     }
 
 }
