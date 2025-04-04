@@ -7,7 +7,8 @@ import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Protected
 class Blog(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
+    val id: Long? = null,
+
 ) {
 
     @Column(nullable = false)
@@ -18,6 +19,11 @@ class Blog(
     var content: String = "내용 없음"
         protected set
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_name", nullable = false)
+    lateinit var author: Users
+
+
     protected constructor() : this(null)
     fun update(title: String, content: String) {
         this.title = title
@@ -25,13 +31,16 @@ class Blog(
     }
 
     companion object {
-        fun create(title: String, content: String): Blog {
+        fun create(title: String, content: String, author: Users): Blog {
             return Blog().apply {
                 this.title = title
                 this.content = content
+                this.author = author
             }
         }
 
     }
+
+
 
 }
