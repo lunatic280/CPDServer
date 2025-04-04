@@ -1,6 +1,7 @@
 package com.example.CPD.service
 
 import com.example.CPD.entity.Blog
+import com.example.CPD.entity.Users
 import com.example.CPD.repository.BlogRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
@@ -23,8 +24,9 @@ class BlogServiceTest {
 
     private val blogRepository: BlogRepository = mock(BlogRepository::class.java)
     private val blogService = BlogService(blogRepository)
-    val testBlog = Blog.create(title = "Test Title", content = "Test Content")
-    val testBlog2 = Blog.create(title = "Test Title1", content = "Test Content1")
+    val testUser = Users.create(name = "test name", password = "password", email = "email")
+    val testBlog = Blog.create(title = "Test Title", content = "Test Content", testUser)
+    val testBlog2 = Blog.create(title = "Test Title1", content = "Test Content1", testUser)
     @Test
     @DisplayName("블로그 모든 글을 조회한다.")
     fun testGetAllBlog() {
@@ -42,7 +44,7 @@ class BlogServiceTest {
     @DisplayName("특정 id로 블로그 글을 조회한다.")
     fun testGetById() {
 
-        val testBlog = Blog.create("테스트 제목", "테스트 내용").apply {
+        val testBlog = Blog.create("테스트 제목", "테스트 내용", testUser).apply {
             val field = this::class.java.getDeclaredField("id")
             field.isAccessible = true
             field.set(this, 1L)
@@ -82,7 +84,7 @@ class BlogServiceTest {
     @Test
     @DisplayName("블로그 글을 찾아서 업데이트한다.")
     fun testUpdateBlog() {
-        val updateBlog = Blog.create(title = "Update Blog", content = "Update Content")
+        val updateBlog = Blog.create(title = "Update Blog", content = "Update Content", testUser)
         whenever(blogRepository.findById(1L)).thenReturn(Optional.of(testBlog))
         whenever(blogRepository.save(any())).thenReturn(updateBlog)
         //updateBlog.id = 1L

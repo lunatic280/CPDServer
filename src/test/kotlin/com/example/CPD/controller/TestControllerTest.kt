@@ -1,6 +1,7 @@
 package com.example.CPD.controller
 
 import com.example.CPD.entity.Blog
+import com.example.CPD.entity.Users
 import com.example.CPD.service.BlogService
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.*
@@ -27,7 +28,8 @@ class TestControllerTest {
 
     private val objectMapper = ObjectMapper()
 
-    val testBlog = Blog.create(title = "Test Title", content = "Test Content")
+    val testUser = Users.create(name = "test Name", password = "password", email = "testEmail")
+    val testBlog = Blog.create(title = "Test Title", content = "Test Content", author = testUser)
 
     @Test
     @DisplayName("특정 ID로 블로그 글을 조회한다")
@@ -43,7 +45,7 @@ class TestControllerTest {
     @Test
     @DisplayName("모든 블로그 글을 조회한다.")
     fun testGetById() {
-        `when`(blogService.getAll()).thenReturn(listOf(testBlog, Blog.create("Test", "content")))
+        `when`(blogService.getAll()).thenReturn(listOf(testBlog, Blog.create("Test", "content", testUser)))
 
         mockMvc.perform(get("/api/"))
             .andExpect(status().isOk)
@@ -71,7 +73,7 @@ class TestControllerTest {
     @Test
     @DisplayName("블로그 글을 업데이트한다.")
     fun testUpdateBlog() {
-        val updateBlog = Blog.create("Update Title", "Update Content")
+        val updateBlog = Blog.create("Update Title", "Update Content", testUser)
         `when`(blogService.update(eq(1L), any())).thenReturn(updateBlog)
 
         mockMvc.perform(put("/api/update/1")
