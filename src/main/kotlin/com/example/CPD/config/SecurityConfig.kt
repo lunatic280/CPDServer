@@ -25,7 +25,7 @@ class SecurityConfig {
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("signup", "/", "/login").permitAll()
+                it.requestMatchers("/api/auth/signup", "/", "/api/auth/login").permitAll()
                     .anyRequest().authenticated()
             }
             .logout {
