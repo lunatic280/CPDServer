@@ -27,6 +27,11 @@ class UserService(
         return userRepository.save(createUser)
     }
 
+    fun findByEmail(email: String): Users {
+        return userRepository.findByEmail(email)
+            ?: throw IllegalArgumentException("해당 이메일의 사용자가 없습니다.")
+    }
+
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepository.findByEmail(username)
             ?: throw UsernameNotFoundException("User not found with email")
