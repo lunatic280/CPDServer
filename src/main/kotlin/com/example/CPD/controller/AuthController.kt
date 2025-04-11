@@ -1,6 +1,7 @@
 package com.example.CPD.controller
 
 import com.example.CPD.data.LoginDto
+import com.example.CPD.data.MessageResponse
 import com.example.CPD.data.UserDto
 import com.example.CPD.entity.Users
 import com.example.CPD.service.UserService
@@ -31,17 +32,17 @@ class AuthController(
     @PostMapping("/signup")
     fun signUser(@RequestBody userDto: UserDto): ResponseEntity<Any> {
         val createdUser = userService.create(userDto)
-       return ResponseEntity.ok("회원가입 성공: ${createdUser.email}")
+       return ResponseEntity.ok(MessageResponse("회원가입 성공: ${createdUser.email}"))
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody loginDto: LoginDto): ResponseEntity<String> {
+    fun login(@RequestBody loginDto: LoginDto): ResponseEntity<MessageResponse> {
         return try {
             val authToken = UsernamePasswordAuthenticationToken(loginDto.email, loginDto.password)
             authenticationManager.authenticate(authToken)
-            ResponseEntity.ok("로그인 성공")
+            ResponseEntity.ok(MessageResponse("로그인 성공"))
         } catch (e: AuthenticationException) {
-            ResponseEntity.status(401).body("로그인 실패: ${e.message}")
+            ResponseEntity.status(401).body(MessageResponse("로그인 실패: ${e.message}"))
         }
     }
 

@@ -4,6 +4,7 @@ import com.example.CPD.service.UserService
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -21,11 +22,15 @@ class SecurityConfig {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http.csrf { it.disable() }
+        http
+            .csrf { it.disable() }
+            .cors { } // ✅ CORS 허용
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/api/auth/signup", "/", "/api/auth/login").permitAll()
+                it
+                    .requestMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                     .anyRequest().authenticated()
             }
             .logout {
@@ -38,6 +43,7 @@ class SecurityConfig {
 
         return http.build()
     }
+
 
     @Bean
     fun passwordEncoder(): BCryptPasswordEncoder {
