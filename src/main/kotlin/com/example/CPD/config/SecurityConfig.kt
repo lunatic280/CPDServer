@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository
 
 @Configuration
 @EnableWebSecurity
@@ -31,6 +32,7 @@ class SecurityConfig {
                 it
                     .requestMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                    .requestMatchers("/api/create-blog").authenticated()
                     .anyRequest().authenticated()
             }
             .logout {
@@ -38,7 +40,12 @@ class SecurityConfig {
                     .invalidateHttpSession(true)
             }
             .sessionManagement {
-                it.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                it
+                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                    .maximumSessions(1).maxSessionsPreventsLogin(false)
+            }
+            .securityContext {
+                it.securityContextRepository(HttpSessionSecurityContextRepository())
             }
 
         return http.build()

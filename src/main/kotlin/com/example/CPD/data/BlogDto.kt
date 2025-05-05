@@ -1,5 +1,6 @@
 package com.example.CPD.dto
 
+import com.example.CPD.data.UserDto
 import com.example.CPD.entity.Blog
 import com.example.CPD.entity.Users
 
@@ -7,7 +8,7 @@ data class BlogDto(
     val id: Long? = null,
     val title: String,
     val content: String,
-    val author: Users
+    val author: UserDto
 ) {
 
     companion object {
@@ -16,13 +17,13 @@ data class BlogDto(
                 id = blog.id,
                 title = blog.title,
                 content = blog.content,
-                author = blog.author
+                author = UserDto.fromEntity(blog.author)
             )
         }
     }
 
-    fun toEntity(): Blog {
-        return Blog.create(title, content, author)
+    fun toEntity(authorEntity: Users): Blog {
+        return Blog.create(title, content, authorEntity)
     }
 
     fun updateEntity(blog: Blog) {

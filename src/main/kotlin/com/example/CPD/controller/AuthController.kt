@@ -16,10 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import kotlin.math.log
 
 @RestController
@@ -36,15 +33,27 @@ class AuthController(
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody loginDto: LoginDto): ResponseEntity<MessageResponse> {
+    fun login(
+        @RequestBody loginDto: LoginDto,
+        request: HttpServletRequest
+    ): ResponseEntity<MessageResponse> {
         return try {
             val authToken = UsernamePasswordAuthenticationToken(loginDto.email, loginDto.password)
-            authenticationManager.authenticate(authToken)
+            val auth = authenticationManager.authenticate(authToken)
+
+            // 인증 정보 SecurityContext에 저장
+            SecurityContextHolder.getContext().authentication = auth
+
+            // 명시적 세션 생성 및 인증 정보 저장
+            val session = request.getSession(true)
+            session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext())
+
             ResponseEntity.ok(MessageResponse("로그인 성공"))
         } catch (e: AuthenticationException) {
             ResponseEntity.status(401).body(MessageResponse("로그인 실패: ${e.message}"))
         }
     }
+
 
     @PostMapping("/logout")
     fun logout(request: HttpServletRequest, response: HttpServletResponse): ResponseEntity<Any> {
@@ -53,6 +62,27 @@ class AuthController(
             SecurityContextLogoutHandler().logout(request, response, auth)
         }
         return ResponseEntity.ok("로그아웃 되었습니다.")
+    }
+
+    @GetMapping("/check-session")
+    fun checkSession(): ResponseEntity<String> {
+        val authentication = SecurityContextHolder.getContext().authentication
+        return if (authentication != null && authentication.isAuthenticated) {
+            ResponseEntity.ok("인증된 사용자: ${authentication.name}")
+        } else {
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않음")
+        }
+    }
+
+    @GetMapping("/api/auth/status")
+    fun authStatus(request: HttpServletRequest): ResponseEntity<String> {
+        val session = request.getSession(false)
+        val auth = SecurityContextHolder.getContext().authentication
+        return if (session != null && auth != null && auth.isAuthenticated) {
+            ResponseEntity.ok("인증 성공: ${auth.name}")
+        } else {
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증 실패")
+        }
     }
 
 

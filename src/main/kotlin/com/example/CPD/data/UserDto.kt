@@ -6,7 +6,7 @@ import org.apache.catalina.User
 data class UserDto(
     val name: String,
     val email: String,
-    val password: String
+    val password: String? = null
 ) {
     companion object {
         fun fromEntity(users: Users): UserDto {
@@ -19,7 +19,7 @@ data class UserDto(
     }
 
     fun toEntity(): Users {
-        return Users.create(name, email, password)
+        return Users.create(name, email, password ?: "")
     }
 
 
