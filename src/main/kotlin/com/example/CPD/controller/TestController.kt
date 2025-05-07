@@ -61,17 +61,19 @@ class TestController(
 
     @PutMapping("/update/{id}")
     fun updatedBlog(@PathVariable id: Long, @RequestBody blogDto: BlogDto) : ResponseEntity<Any> {
-        val authorEmail = blogDto.author.email
+        //val authorEmail = blogDto.author.email
 
         val authenticatedUserEmail = (SecurityContextHolder.getContext().authentication.principal as UserDetails).username
 
+        val existing = blogService.getById(id)
+        val authorEmail = existing.author.email
+
         if (authenticatedUserEmail != authorEmail) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("인증된 사용자와 요청자가 일치하지 않습니다")
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("작성자만 수정할 수 있습니다")
         }
 
-        val authorEntity = userService.findByEmail(authorEmail)
-        val targetBlog = blogDto.toEntity(authorEntity)
-        return ResponseEntity.ok(blogService.update(id,targetBlog))
+        val updatedBlog = blogService.update(id, blogDto, authenticatedUserEmail)
+        return ResponseEntity.ok(BlogDto.fromEntity(updatedBlog))
     }
 
     @DeleteMapping("/{id}")
