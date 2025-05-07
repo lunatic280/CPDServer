@@ -31,7 +31,14 @@ class BlogService(
     }
 
     @Transactional
-    fun remove(id: Long) {
+    fun remove(id: Long, currentAuthor: String) {
+        val blog = blogRepository.findById(id).orElseThrow { EntityNotFoundException("블로그가 없습니다.") }
+        val blogAuthor = blog.author.email
+
+        if (blogAuthor != currentAuthor) {
+            throw AccessDeniedException("작성자만 삭제할 수 있습니다.")
+        }
+
         return blogRepository.deleteById(id)
     }
 

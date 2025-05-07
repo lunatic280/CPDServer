@@ -76,8 +76,9 @@ class TestController(
         return ResponseEntity.ok(BlogDto.fromEntity(updatedBlog))
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     fun deletedBlog(@PathVariable id: Long) {
-        return blogService.remove(id)
+        val currentAuthorEmail = (SecurityContextHolder.getContext().authentication.principal as UserDetails).username
+        return blogService.remove(id, currentAuthorEmail)
     }
 }
