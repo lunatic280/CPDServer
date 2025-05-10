@@ -2,35 +2,35 @@ spring:
   jpa:
     database-platform: org.hibernate.community.dialect.SQLiteDialect
     hibernate:
-      ddl-auto: create # update
+      ddl-auto: create
   datasource:
     url: jdbc:sqlite:mydb.db
     driver-class-name: org.sqlite.JDBC
     username: admin
     password: admin
 
-  jwt:
-    secret-key: Y3Bkc2VydmVyCg==
-    access-token-expire-time: 300
-    refresh-token-expire-time: 7200
-
-  security:
+  security:                    # ← jwt 아래가 아니라 spring 아래로 이동
     oauth2:
       client:
         registration:
           kakao:
-            client-id: 469634aad6d64f41964842455dd11961        # 카카오 앱 REST API 키
-            client-secret: fEJmOqKB8wSAS6loXq595qsekhyXQZtG   # 카카오 앱 클라이언트 시크릿
-            redirect-uri: "{baseUrl}/login/oauth2/code/kakao"  # Redirect URI (카카오 디벨로퍼스에도 등록)
-            authorization-grant-type: authorization_code       # 인가 코드 그랜트 방식
-            client-authentication-method: client_secret_post   # 클라이언트 시크릿 전달 방식
-            scope: # 요청할 사용자 정보 범위
+            client-id: 469634aad6d64f41964842455dd11961
+            client-secret: fEJmOqKB8wSAS6loXq595qsekhyXQZtG
+            redirect-uri: "yourapp://oauth2redirect/login/oauth2/code/kakao"
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+            scope:
               - profile_nickname
               - profile_image
               - account_email
         provider:
           kakao:
-            authorization-uri: https://kauth.kakao.com/oauth/authorize   # 인가 엔드포인트
-            token-uri: https://kauth.kakao.com/oauth/token               # 토큰 발급 엔드포인트
-            user-info-uri: https://kapi.kakao.com/v2/user/me             # 사용자 정보 API
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
+
+jwt:                           # 이제 별도 블록
+  secret-key: n7u1fHyzD4/E3QfZcpnIu1kzXG9xq0j5Ps8LQy0rY4Y=
+  access-token-expire-time: 300
+  refresh-token-expire-time: 7200

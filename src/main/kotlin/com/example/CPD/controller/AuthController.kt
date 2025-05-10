@@ -4,6 +4,8 @@ import com.example.CPD.data.LoginDto
 import com.example.CPD.data.MessageResponse
 import com.example.CPD.data.UserDto
 import com.example.CPD.entity.Users
+import com.example.CPD.oauth.TokenDto
+import com.example.CPD.oauth.TokenProvider
 import com.example.CPD.service.UserService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -23,7 +25,8 @@ import kotlin.math.log
 @RequestMapping("/api/auth")
 class AuthController(
     private val userService: UserService,
-    private val authenticationManager: AuthenticationManager
+    private val authenticationManager: AuthenticationManager,
+    private val tokenProvider: TokenProvider
 ) {
 
     @PostMapping("/signup")
@@ -83,6 +86,18 @@ class AuthController(
         } else {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증 실패")
         }
+    }
+
+    @GetMapping("/login/kakao")
+    fun loginKakao(
+        @RequestParam accessToken: String,
+        @RequestParam refreshToken: String
+    ): TokenDto = TokenDto(accessToken, refreshToken)
+
+    @PostMapping("/refresh")
+    fun refresh(@RequestBody request: Map<String, String>): TokenDto {
+        val newTokens = tokenProvider.createToken(request["refreshToken"]!!)
+        return newTokens
     }
 
 

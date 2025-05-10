@@ -12,6 +12,6 @@ data class DogDto(
 ) {
 
     fun toDog(): Dog {
-        return Dog(dogName = dogName, breed = breed, age = age, user = user)
+        return Dog(name = dogName, breed = breed, age = age, user = user)
     }
 }

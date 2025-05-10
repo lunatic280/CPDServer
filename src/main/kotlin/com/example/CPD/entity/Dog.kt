@@ -10,7 +10,7 @@ class Dog(
     val id: Long? = null,
 
     @Column(nullable = true)
-    val dogName: String = "",
+    val name: String = "",
 
     @Column(nullable = true)
     val breed: String = "",
@@ -25,6 +25,6 @@ class Dog(
 ) {
 
     fun toDto(): DogDto {
-        return DogDto(id, dogName, breed, age, user)
+        return DogDto(id, name, breed, age, user)
     }
 }
