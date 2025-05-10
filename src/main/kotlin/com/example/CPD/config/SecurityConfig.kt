@@ -47,6 +47,8 @@ class SecurityConfig {
             .securityContext {
                 it.securityContextRepository(HttpSessionSecurityContextRepository())
             }
+            .oauth2Login { login -> login
+            }
 
         return http.build()
     }
