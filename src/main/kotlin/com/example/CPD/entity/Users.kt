@@ -24,7 +24,7 @@ class Users(
     @OneToMany(mappedBy = "author", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
     var blogs: MutableList<Blog?> = mutableListOf()
 
-    @OneToMany(mappedBy = "dog", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dogName", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
     var dogs: MutableList<Dog?> = mutableListOf()
 
 

@@ -18,8 +18,10 @@ class DogController(
 ) {
 
     @GetMapping("/")
-    fun getAllDog(): ResponseEntity<List<DogDto?>> {
-        return ResponseEntity.ok(dogService.getAllDog())
+    fun getUserDog(): ResponseEntity<List<DogDto?>> {
+        val authenticatedUserEmail = (SecurityContextHolder.getContext().authentication.principal as UserDetails).username
+
+        return ResponseEntity.ok(dogService.getUserDog(authenticatedUserEmail))
     }
 
     @GetMapping("/{id}")
@@ -42,7 +44,7 @@ class DogController(
     }
 
     @DeleteMapping("/delete/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Unit> {
+    fun delete(@PathVariable id: Long): ResponseEntity<Any> {
         dogService.delete(id)
         return ResponseEntity.noContent().build()
     }
