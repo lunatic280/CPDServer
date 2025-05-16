@@ -26,7 +26,4 @@ data class BlogDto(
         return Blog.create(title, content, authorEntity)
     }
 
-    fun updateEntity(blog: Blog) {
-        blog.update(title, content)
-    }
 }

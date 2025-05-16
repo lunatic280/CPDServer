@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserService(
@@ -17,7 +18,7 @@ class UserService(
     private val bCryptPasswordEncoder: BCryptPasswordEncoder
 ) : UserDetailsService {
 
-
+    @Transactional
     fun create(userDto: UserDto): Users {
         val createUser = Users.create(
             userDto.name,
@@ -26,7 +27,7 @@ class UserService(
         )
         return userRepository.save(createUser)
     }
-
+    @Transactional(readOnly = true)
     fun findByEmail(email: String): Users {
         return userRepository.findByEmail(email)
             ?: throw IllegalArgumentException("해당 이메일의 사용자가 없습니다.")

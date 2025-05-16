@@ -4,10 +4,10 @@ import com.example.CPD.dto.BlogDto
 import com.example.CPD.entity.Blog
 import com.example.CPD.repository.BlogRepository
 import jakarta.persistence.EntityNotFoundException
-import jakarta.transaction.Transactional
 import jakarta.websocket.server.PathParam
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BlogService(
@@ -42,10 +42,12 @@ class BlogService(
         return blogRepository.deleteById(id)
     }
 
+    @Transactional(readOnly = true)
     fun getById(id: Long) : Blog {
         return blogRepository.findById(id).orElseThrow()
     }
 
+    @Transactional(readOnly = true)
     fun getAll(): List<Blog> {
         return blogRepository.findAll()
     }
