@@ -1,0 +1,14 @@
+package com.example.CPD.data
+
+import com.example.CPD.entity.PythonData
+
+data class PythonDataDto(
+    val id: Long? = null,
+    val stringTest: String,
+    val intTest: Int,
+    val booleanTest: Boolean
+) {
+    fun toEntity(): PythonData {
+        return PythonData(null, stringTest, intTest, booleanTest)
+    }
+}
