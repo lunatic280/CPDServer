@@ -1,4 +1,4 @@
-import requests
+```import requests
 
 session = requests.Session()
 
@@ -22,4 +22,4 @@ data = {
 url = "http://localhost:8080/test/test-json"
 
 response = session.post(url, json=data)
-print("데이터 응답", response.status_code, response.text)
+print("데이터 응답", response.status_code, response.text)```
