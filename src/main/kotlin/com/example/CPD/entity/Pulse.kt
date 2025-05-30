@@ -19,7 +19,7 @@ class Pulse(
     @Column(nullable = false)
     val interBeatInterval: Int,
 
-    @Column(name = "signal", nullable = false)
+    @Column(name = "signal_value", nullable = false)
     val signal: Int,
 
     @Column(nullable = false)
