@@ -32,6 +32,7 @@ class SecurityConfig {
                 it
                     .requestMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/endpoint").permitAll()
                     .requestMatchers("/api/create-blog").authenticated()
                     .anyRequest().authenticated()
             }
