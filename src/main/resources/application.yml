@@ -1,11 +1,25 @@
+#spring:
+#  jpa:
+#    database-platform: org.hibernate.community.dialect.SQLiteDialect
+#    hibernate:
+#      ddl-auto: create # update
+#  datasource:
+#    url: jdbc:sqlite:mydb.db
+#    driver-class-name: org.sqlite.JDBC
+#    username: admin
+#    password: admin
+#
 spring:
-  jpa:
-    database-platform: org.hibernate.community.dialect.SQLiteDialect
-    hibernate:
-      ddl-auto: create # update
   datasource:
-    url: jdbc:sqlite:mydb.db
-    driver-class-name: org.sqlite.JDBC
-    username: admin
-    password: admin
+    url: jdbc:mariadb://svc.sel4.cloudtype.app:31472/aid_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password: aid
+    driver-class-name: org.mariadb.jdbc.Driver
 
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+    show-sql: true

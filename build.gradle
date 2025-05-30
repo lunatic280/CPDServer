@@ -52,7 +52,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-	implementation 'org.xerial:sqlite-jdbc:3.41.2.1' // sqlite jdbc
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	implementation 'org.hibernate.orm:hibernate-community-dialects' // diarect
 }
 
