@@ -1,11 +1,13 @@
 package com.example.CPD.entity
 
 import com.example.CPD.data.PythonDataDto
+import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import java.time.LocalDateTime
 
 @Entity
 class PythonData(
@@ -20,9 +22,13 @@ class PythonData(
     val intTest: Int = 0,
 
     @Column(nullable = false)
-    val booleanTest: Boolean = false
+    val booleanTest: Boolean = false,
+
+    @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")  // Python에서 ISO 포맷으로 보낼 때
+    val timestamp: LocalDateTime
 ) {
     fun toDto(): PythonDataDto {
-        return PythonDataDto(stringTest = stringTest, intTest = intTest, booleanTest = booleanTest)
+        return PythonDataDto(stringTest = stringTest, intTest = intTest, booleanTest = booleanTest, timestamp = timestamp)
     }
 }
