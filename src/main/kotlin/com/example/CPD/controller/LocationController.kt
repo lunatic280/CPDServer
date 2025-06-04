@@ -19,7 +19,8 @@ class LocationController(
     @PostMapping("/dog/location")
     fun saveLocation(@RequestBody locationDto: LocationDto): ResponseEntity<Any> {
         val savedLocation = locationService.saveLocation(locationDto)
-        println(distanceService.sumDistance(savedLocation))
-        return ResponseEntity.ok(savedLocation)
+        val distance = distanceService.sumDistance(savedLocation)
+        println("누적 거리: $distance")
+        return ResponseEntity.ok(mapOf("distance" to distance, "location" to savedLocation))
     }
 }
