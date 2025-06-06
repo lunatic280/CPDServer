@@ -17,6 +17,9 @@ class Location(
     val id: Long? = null,
 
     @Column(nullable = false)
+    val timestamp: String,
+
+    @Column(nullable = false)
     val latitude: Double,
 
     @Column(nullable = false)
@@ -24,6 +27,6 @@ class Location(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_name", nullable = false)
-    var user: UserDto
+    var user: Users
 
 )

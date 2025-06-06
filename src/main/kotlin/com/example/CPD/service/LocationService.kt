@@ -15,10 +15,10 @@ class LocationService(
 
     @Transactional
     fun saveLocation(locationDto: LocationDto): LocationDto {
-        val savedLocation = Location(null, latitude = locationDto.latitude, longitude = locationDto.longitude, user = locationDto.user)
         val ownerEmail = locationDto.user.email
         val owner = userRepository.findByEmail(ownerEmail)
             ?: throw IllegalArgumentException("해당 이메일을 사용하는 사용자를 찾을 수 없습니다.")
+        val savedLocation =locationDto.toEntity(owner)
         locationRepository.save(savedLocation)
         return locationDto
     }

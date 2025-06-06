@@ -6,10 +6,20 @@ import jakarta.persistence.*
 class Distance(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long? = null,
 
     @Column(nullable = false)
-    val distance: Double
+    val distance: Double,
+
+    @Column(nullable = false)
+    val startTime: String,
+
+    @Column(nullable = false)
+    val endTime: String,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_name", nullable = false)
+    var user: Users
 ) {
 
 }

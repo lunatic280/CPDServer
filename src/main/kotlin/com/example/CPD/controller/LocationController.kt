@@ -1,6 +1,8 @@
 package com.example.CPD.controller
 
+import com.example.CPD.data.DistanceDto
 import com.example.CPD.data.LocationDto
+import com.example.CPD.entity.Distance
 import com.example.CPD.service.DistanceService
 import com.example.CPD.service.LocationService
 import org.springframework.http.ResponseEntity
@@ -19,8 +21,12 @@ class LocationController(
     @PostMapping("/dog/location")
     fun saveLocation(@RequestBody locationDto: LocationDto): ResponseEntity<Any> {
         val savedLocation = locationService.saveLocation(locationDto)
-        val distance = distanceService.sumDistance(savedLocation)
-        println("누적 거리: $distance")
-        return ResponseEntity.ok(mapOf("distance" to distance, "location" to savedLocation))
+        return ResponseEntity.ok(savedLocation)
+    }
+
+    @PostMapping("/dog/distance")
+    fun savedDistance(@RequestBody distanceDto: DistanceDto): ResponseEntity<Any> {
+        val savedDistance = distanceService.savedDistance(distanceDto)
+        return ResponseEntity.ok(savedDistance)
     }
 }
