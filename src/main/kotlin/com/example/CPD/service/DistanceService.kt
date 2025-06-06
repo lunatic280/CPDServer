@@ -18,7 +18,7 @@ class DistanceService(
 
     @Transactional
     fun savedDistance(distanceDto: DistanceDto): Distance {
-        val userEmail = distanceDto.user.email
+        val userId = distanceDto.user.
         val user = userRepository.findByEmail(userEmail)
             ?: throw IllegalArgumentException("맞는 이메일이 없습니다.")
         val savedDistance = distanceDto.toEntity(user)
