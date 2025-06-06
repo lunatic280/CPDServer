@@ -18,7 +18,7 @@ class Distance(
     val endTime: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_name", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     var user: Users
 ) {
 

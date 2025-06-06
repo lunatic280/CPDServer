@@ -28,7 +28,7 @@ class Dog(
     val breed: String = "똥개",
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     var owner: Users
 
 ) {
