@@ -2,10 +2,11 @@ package com.example.CPD.data
 
 import com.example.CPD.entity.Location
 import com.example.CPD.entity.Users
+import java.time.LocalDateTime
 
 data class LocationDto(
     val id: Long? = null,
-    val timestamp: String,
+    val timestamp: LocalDateTime,
     val latitude: Double,
     val longitude: Double,
     val user: UserDto

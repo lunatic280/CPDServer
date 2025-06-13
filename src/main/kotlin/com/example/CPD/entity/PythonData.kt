@@ -16,19 +16,13 @@ class PythonData(
     val id: Long? = null,
 
     @Column(nullable = false)
-    val stringTest: String = "",
-
-    @Column(nullable = false)
     val intTest: Int = 0,
-
-    @Column(nullable = false)
-    val booleanTest: Boolean = false,
 
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")  // Python에서 ISO 포맷으로 보낼 때
     val timestamp: LocalDateTime
 ) {
     fun toDto(): PythonDataDto {
-        return PythonDataDto(stringTest = stringTest, intTest = intTest, booleanTest = booleanTest, timestamp = timestamp)
+        return PythonDataDto(intTest = intTest, timestamp = timestamp)
     }
 }

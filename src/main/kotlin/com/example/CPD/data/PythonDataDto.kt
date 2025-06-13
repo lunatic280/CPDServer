@@ -5,12 +5,20 @@ import java.time.LocalDateTime
 
 data class PythonDataDto(
     val id: Long? = null,
-    val stringTest: String,
     val intTest: Int,
-    val booleanTest: Boolean,
     val timestamp: LocalDateTime
 ) {
+    companion object {
+        fun fromEntity(pythonData: PythonData): PythonDataDto {
+            return PythonDataDto(
+                id = pythonData.id,
+                intTest = pythonData.intTest,
+                timestamp = pythonData.timestamp
+            )
+        }
+    }
+
     fun toEntity(): PythonData {
-        return PythonData(null, stringTest, intTest, booleanTest, timestamp)
+        return PythonData(null, intTest, timestamp)
     }
 }
