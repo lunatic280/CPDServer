@@ -26,7 +26,7 @@ class MergeService(
             location -> LocationDto.fromEntity(location)
         }
 
-        val pulseList = pulseRepository.findAllByTimestampBetween(findStartTime, findEndTime).map {
+        val pulseList = pulseRepository.findAllByTimeStampBetween(findStartTime, findEndTime).map {
             pulse -> PulseDto.fromEntity(pulse)
         }
 
