@@ -15,8 +15,6 @@ class PulseService(
     fun savePulse(pulseDto: PulseDto): PulseDto {
         val savedPulse = Pulse(
             null,
-            beatsPerMinute = pulseDto.beatsPerMinute,
-            interBeatInterval = pulseDto.interBeatInterval,
             signal = pulseDto.signal,
             timeStamp = pulseDto.timeStamp
         )
