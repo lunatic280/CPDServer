@@ -18,7 +18,7 @@ class Pulse(
     @Column(name = "signal_value", nullable = false)
     val signal: Int,
 
-    @Column(nullable = false)
+    @Column(name = "time_stamp", nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     val timeStamp: LocalDateTime
 ) {
