@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.time.LocalDateTime
 
 interface PulseRepository: JpaRepository<Pulse, Long> {
-    fun findAllByTimestampBetween(start: LocalDateTime, end: LocalDateTime): List<Pulse>
+    fun findAllByTimeStampBetween(start: LocalDateTime, end: LocalDateTime): List<Pulse>
 }
