@@ -20,4 +20,9 @@ class PulseService(
         )
         return pulseRepository.save(savedPulse).toDto()
     }
+
+    fun findLatestPulse(): PulseDto? {
+        val latestPulse = pulseRepository.findFirstByOrderByIdDesc()
+        return latestPulse?.let { PulseDto.fromEntity(it) }
+    }
 }

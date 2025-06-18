@@ -6,4 +6,5 @@ import java.time.LocalDateTime
 
 interface PulseRepository: JpaRepository<Pulse, Long> {
     fun findAllByTimeStampBetween(start: LocalDateTime, end: LocalDateTime): List<Pulse>
+    fun findFirstByOrderByIdDesc(): Pulse?
 }
